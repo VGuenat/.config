@@ -1,0 +1,5 @@
+
+[Default Applications]
+application/pdf=firefox.desktop
+text/xml=firefox.desktop
+text/html=firefox.desktop
