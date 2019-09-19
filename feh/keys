@@ -1,0 +1,18 @@
+# Unsetting keys
+zoom_in
+zoom_out
+scroll_left
+scroll_right
+scroll_up
+scroll_down
+scroll_up_page
+scroll_down_page
+# Setting keys
+zoom_in plus
+zoom_out minus
+scroll_left h
+scroll_right l
+scroll_up k
+scroll_down j
+scroll_up_page C-b
+scroll_down_page C-f
