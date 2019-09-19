@@ -49,7 +49,7 @@ end
 beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/theme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xterm"
+terminal = "alacritty"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -273,6 +273,53 @@ end)
 
 update_widget_brightness()
 
+-- Create the prompt box
+local prompt_widget = wibox {
+    bg = "#000000",
+    border_width = 1,
+    border_color = "#ff0000",
+    max_widget_size = 500,
+    ontop = true,
+    height = 50,
+    width = 250,
+    shape = gears.shape.rectangle
+}
+
+local prompt_shell = awful.widget.prompt()
+
+prompt_widget:setup {
+    {
+        layout = wibox.container.margin,
+        left = 10,
+        prompt_shell,
+    },
+    id = "left",
+    layout = wibox.layout.fixed.horizontal
+}
+
+local function promptbox_launch ()
+    prompt_widget.visible = true
+    awful.placement.top(prompt_widget, { margins = {top = 40}, parent = awful.screen.focused()})
+    awful.prompt.run {
+        prompt = "<b>POMME</b>: ",
+        bg_cursor = "#ffffff",
+        textbox = prompt_shell.widget,
+        exe_callback = function(input)
+            if not input or #input == 0 then
+                return
+            end
+            naughty.notify{ text = "The input was: " .. input }
+            awful.spawn(terminal .. " -e " .. input)
+            return
+        end,
+        done_callback = function()
+            prompt_widget.visible = false
+            return
+        end
+    }
+end
+
+-- Main function for initializing each screen
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
@@ -400,6 +447,24 @@ globalkeys = gears.table.join(
         { description = "Increase brightness", group = "awesome" }
     ),
 
+    -- Enter commands
+    awful.key({ modkey }, "r", function ()
+            awful.spawn.easy_async_with_shell("rofi -show run")
+        end,
+        { description = "Open command prompt", group = "awesome" }
+    ),
+    -- Open program (i.e. with .desktop files)
+    awful.key({ modkey }, "p", function ()
+            awful.spawn.easy_async_with_shell("rofi -show drun")
+        end,
+        { description = "Launch program", group = "awesome" }
+    ),
+
+    -- -- Command prompt
+    -- awful.key({ modkey }, "r", promptbox_launch,
+    --     { description = "Show prompt", group = "awesome" }
+    -- ),
+
     -- Default Awesome keybindings
     awful.key({ modkey, }, "s", hotkeys_popup.show_help,
         { description = "show help", group="awesome" }
@@ -501,25 +566,25 @@ globalkeys = gears.table.join(
                     )
                   end
               end,
-              {description = "restore minimized", group = "client"}),
+              {description = "restore minimized", group = "client"})
 
-    -- Prompt
-    awful.key({ modkey }, "r",     function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
+    -- -- Prompt
+    -- awful.key({ modkey }, "r",     function () awful.screen.focused().mypromptbox:run() end,
+    --           {description = "run prompt", group = "launcher"}),
 
-    awful.key({ modkey }, "x",
-              function ()
-                  awful.prompt.run {
-                    prompt       = "Run Lua code: ",
-                    textbox      = awful.screen.focused().mypromptbox.widget,
-                    exe_callback = awful.util.eval,
-                    history_path = awful.util.get_cache_dir() .. "/history_eval"
-                  }
-              end,
-              {description = "lua execute prompt", group = "awesome"}),
+    -- awful.key({ modkey }, "x",
+    --           function ()
+    --               awful.prompt.run {
+    --                 prompt       = "Run Lua code: ",
+    --                 textbox      = awful.screen.focused().mypromptbox.widget,
+    --                 exe_callback = awful.util.eval,
+    --                 history_path = awful.util.get_cache_dir() .. "/history_eval"
+    --               }
+    --           end,
+    --           {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+    -- awful.key({ modkey }, "p", function() menubar.show() end,
+    --           {description = "show the menubar", group = "launcher"})
 )
 
 clientkeys = gears.table.join(
@@ -686,8 +751,12 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = true }
     },
 
-    { rule = { class = "XTerm" },
-      properties = { titlebars_enabled = false } },
+    { rule_any = {
+        class = {
+            "XTerm",
+            "Alacritty"
+        } 
+    }, properties = { titlebars_enabled = false } },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
