@@ -1,0 +1,138 @@
+! Solarized color scheme for the X Window System
+!
+! http://ethanschoonover.com/solarized
+
+
+! Common
+
+#define S_yellow        #b58900
+#define S_orange        #cb4b16
+#define S_red           #dc322f
+#define S_magenta       #d33682
+#define S_violet        #6c71c4
+#define S_blue          #268bd2
+#define S_cyan          #2aa198
+#define S_green         #859900
+
+
+! Dark
+
+#define S_base03        #002b36
+#define S_base02        #073642
+#define S_base01        #586e75
+#define S_base00        #657b83
+#define S_base0         #839496
+#define S_base1         #93a1a1
+#define S_base2         #eee8d5
+#define S_base3         #fdf6e3
+
+
+! Light
+
+! #define S_base03        #fdf6e3
+! #define S_base02        #eee8d5
+! #define S_base01        #93a1a1
+! #define S_base00        #839496
+! #define S_base0         #657b83
+! #define S_base1         #586e75
+! #define S_base2         #073642
+! #define S_base3         #002b36
+
+
+! To only apply colors to your terminal, for example, prefix
+! the color assignment statement with its name. Example:
+!
+! URxvt*background:            S_base03
+
+!*background:              S_base03
+!*foreground:              S_base0
+!*fading:                  40
+!*fadeColor:               S_base03
+!*cursorColor:             S_base1
+!*pointerColorBackground:  S_base01
+!*pointerColorForeground:  S_base1
+!
+!*color0:                  S_base02
+!*color1:                  S_red
+!*color2:                  S_green
+!*color3:                  S_yellow
+!*color4:                  S_blue
+!*color5:                  S_magenta
+!*color6:                  S_cyan
+!*color7:                  S_base2
+!*color9:                  S_orange
+!*color8:                  S_base03
+!*color10:                 S_base01
+!*color11:                 S_base00
+!*color12:                 S_base0
+!*color13:                 S_violet
+!*color14:                 S_base1
+!*color15:                 S_base3
+
+!color0:                  #000000
+!color1:                  #c00000
+!color2:                  #008000
+!color3:                  #808000
+!color4:                  #0000c0
+!color5:                  #c000c0
+!color6:                  #008080
+!color7:                  #c0c0c0
+!color9:                  #808080
+!color8:                  #ff6060
+!color10:                 #00ff00
+!color11:                 #ffff00
+!color12:                 #8080ff
+!color13:                 #ff40ff
+!color14:                 #00ffff
+!color15:                 #ffffff
+!cursorColor:             Black
+
+! Colors used in Alacritty
+#define primary_background: '0x263238'
+#define primary_foreground: '0xeeffff'
+
+#define cursor_text: '0x263238'
+#define cursor_cursor: '0xeeffff'
+
+#define normal_black:   '0x263238'
+#define normal_red:     '0xf07178'
+#define normal_green:   '0xc3e88d'
+#define normal_yellow:  '0xffcb6b'
+#define normal_blue:    '0x82aaff'
+#define normal_magenta: '0xc792ea'
+#define normal_cyan:    '0x89ddff'
+#define normal_white:   '0xeeffff'
+
+#define bright_black:   '0x546e7a'
+#define bright_red:     '0xf07178'
+#define bright_green:   '0xc3e88d'
+#define bright_yellow:  '0xffcb6b'
+#define bright_blue:    '0x82aaff'
+#define bright_magenta: '0xc792ea'
+#define bright_cyan:    '0x89ddff'
+#define bright_white:   '0xffffff'
+
+*background:              primary_background
+*foreground:              primary_forground
+*fading:                  40
+*fadeColor:               normal_black
+*cursorColor:             cursor_text
+*pointerColorBackground:  cursor_cursor
+*pointerColorForeground:  cursor_cursor
+
+*color0:                  normal_black
+*color1:                  normal_red
+*color2:                  normal_green
+*color3:                  normal_yellow
+*color4:                  normal_blue
+*color5:                  normal_magenta
+*color6:                  normal_cyan
+*color7:                  normal_white
+*color8:                  bright_black
+*color9:                  bright_red
+*color10:                 bright_green
+*color11:                 bright_yellow
+*color12:                 bright_blue
+*color13:                 bright_magenta
+*color14:                 bright_cyan
+*color15:                 bright_white

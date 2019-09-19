@@ -1,0 +1,31 @@
+!XTerm resources settings
+XTerm.termName: xterm-256color
+XTerm*utf8: 1
+XTerm*locale: true
+XTerm*selectToClipboard: true
+XTerm*SaveLines: 5000
+XTerm.vt100.backarrowKey: false
+XTerm.ttyModes: erase ^?
+
+XTerm*faceName: Meslo LG S for Powerline:style=Regular
+XTerm*faceSize: 12
+XTerm*maximized: true
+
+!UXTerm resources settings
+UXTerm.termName: xterm-256color
+UXTerm*utf8: 1
+UXTerm*locale: true
+UXTerm*selectToClipboard: true
+UXTerm*SaveLines: 5000
+UXTerm.vt100.backarrowKey: false
+UXTerm.ttyModes: erase ^?
+
+UXTerm*faceName: Meslo LG M for Powerline:style=Regular
+UXTerm*faceSize: 12
+UXTerm*maximized: true
+
+!XTerm.fullscreen: never
+!XTerm.vt100.reverseVideo: true
+!XTerm*ptySttySize: true
+!XTerm*VT100.geometry: 185x59
+
