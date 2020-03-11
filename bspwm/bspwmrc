@@ -1,0 +1,41 @@
+#! /bin/sh
+
+# Key bindings daemon
+for pid in $(pgrep sxhkd); do
+	kill $pid
+done
+sxhkd &
+
+# Workspace initialization
+for m in $(polybar -m | cut -d':' -f1); do
+    bspc monitor $m -d 1 2 3 4 5 6 7
+done
+
+# Borders and gaps
+bspc config border_width                0
+bspc config window_gap                  20
+
+bspc config split_ratio                 0.5
+bspc config borderless_monocle          true
+bspc config gapless_monocle             true
+bspc config automatic_scheme            spiral
+
+# Monitors
+bspc config remove_disabled_monitors    true
+bspc config remove_unplugged_monitors   true
+
+# Pointer config
+bspc config pointer_follows_focus       true
+bspc config pointer_follows_monitor     true
+bspc config focus_follows_pointer       true
+bspc config pointer_modifier            mod1
+bspc config pointer_action1             move
+
+# Padding
+bspc config top_padding                 35
+bspc config bottom_padding              0
+bspc config left_padding                0
+bspc config right_padding               0
+
+# Startup script
+startup.sh

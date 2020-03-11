@@ -1,0 +1,287 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+
+
+[colors]
+;background = ${xrdb:color0:#222}
+background = #222
+background-alt = #444
+;foreground = ${xrdb:color7:#222}
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+
+
+[bar/example]
+monitor = ${env:MONITOR:eDP1}
+width = 100%
+height = 35
+radius = 0.0
+fixed-center = false
+override-redirect = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 2
+module-margin-right = 2
+
+font-0 = Monoid Nerd Font:size=11:style=Regular;2
+
+modules-left = bspwm i3
+modules-center = date
+modules-right = pulseaudio xbacklight xkeyboard wlan eth battery powermenu
+
+;separator = "|"
+;separator-foreground = ${foreground-alt}
+
+tray-position = right
+tray-padding = 0
+
+
+
+[module/bspwm]
+type = internal/bspwm
+index-sort = true
+wrapping-scroll = true
+pin-workspace = true
+
+format = <label-state>
+
+label-mode = %mode%
+
+; Workspace with something on it
+label-occupied = %name%
+label-occupied-background = ${colors.background-alt}
+label-occupied-padding = 1
+
+; Workspace empty
+label-empty = %name%
+label-empty-background = ${colors.background}
+label-empty-padding = 1
+
+; Current workspace
+label-focused = %name%
+label-focused-background = ${colors.background-alt}
+label-focused-padding = 1
+
+; Workspace with the urgent flag
+label-urgent = %name%
+label-urgent-background = ${colors.secondary}
+label-urgent-padding = 1
+
+
+
+[module/i3]
+type = internal/i3
+index-sort = true
+wrapping-scroll = true
+pin-workspace = true
+
+format = <label-state>
+
+label-mode = %mode%
+
+label-focused = %index%
+label-focused-background = ${colors.background-alt}
+label-focused-padding = 1
+
+label-unfocused = %index%
+label-unfocused-background = ${colors.background}
+label-unfocused-padding = 1
+
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-padding = ${self.label-focused-padding}
+
+label-urgent = %index%
+label-urgent-background = ${colors.secondary}
+label-urgent-padding = 1
+
+
+
+[module/xwindow]
+type = internal/xwindow
+
+
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = "%a %b, %d"
+
+time = "%k:%M"
+
+label = %date% %time%
+
+
+
+[module/xkeyboard]
+type = internal/xkeyboard
+format = <label-layout>
+
+label-layout =  %icon%
+layout-icon-0 = us;US
+layout-icon-1 = fr;FR
+layout-icon-2 = be;BE
+layout-icon-padding = 0
+layout-icon-margin = 0
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume>
+label-volume =  %percentage%%
+label-volume-foreground = ${root.foreground}
+
+label-muted = ﱝ %percentage%%
+label-muted-foreground = #666
+
+;bar-volume-width = 10
+;bar-volume-indicator = |
+;bar-volume-fill = -
+;bar-volume-empty = -
+;bar-volume-foreground-0 = #55aa55
+;bar-volume-foreground-1 = #55aa55
+;bar-volume-foreground-2 = #55aa55
+;bar-volume-foreground-3 = #55aa55
+;bar-volume-foreground-4 = #55aa55
+;bar-volume-foreground-5 = #f5a70a
+;bar-volume-foreground-6 = #ff5555
+;bar-volume-gradient = false
+;bar-volume-empty-foreground = ${colors.foreground-alt}
+
+
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label>
+label = ﯦ %percentage%%
+
+;bar-width = 10
+;bar-indicator = |
+;bar-fill = ─
+;bar-empty = ─
+;bar-indicator-foreground = #fff
+;bar-indicator-font = 1
+;bar-fill-font = 1
+;bar-fill-foreground = #9f78e1
+;bar-empty-font = 1
+;bar-empty-foreground = ${colors.foreground-alt}
+
+
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0
+interval = 2.0
+
+format-connected = <label-connected>
+label-connected = 直 %essid%
+
+format-disconnected = <label-disconnected>
+label-disconnected = 睊
+
+
+
+[module/eth]
+type = internal/network
+interface = enp0s20f0u6u2
+
+format-connected = <label-connected>
+label-connected = 
+
+format-disconnected = <label-disconnected>
+label-disconnected = 
+
+
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+
+label-charging = %percentage_raw%%
+format-charging = <ramp-capacity> <label-charging>
+
+label-discharging = %percentage_raw%%
+format-discharging = <ramp-capacity> <label-discharging>
+
+label-full = Full
+format-full = <label-full>
+format-full-prefix = " "
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+
+
+
+[module/powermenu]
+type = custom/menu
+expand-right = false
+
+label-open = ""
+label-open-foreground = ${colors.foreground}
+
+label-close = ""
+label-close-foreground = ${colors.foreground}
+
+label-separator = "/"
+label-separator-padding = 1
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = 
+menu-0-0-exec = menu-open-1
+menu-0-1 = ⏼
+menu-0-1-exec = menu-open-2
+
+menu-1-0 =  Shutdown
+menu-1-0-exec = shutdown now
+menu-1-1 =  Return
+menu-1-1-exec = menu-open-0
+
+menu-2-0 = ⏼ Reboot
+menu-2-0-exec = reboot
+menu-2-1 =  Return
+menu-2-1-exec = menu-open-0
+
+
+
+[settings]
+screenchange-reload = true
+; vim:ft=dosini
