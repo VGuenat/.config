@@ -33,9 +33,9 @@ window:
   #
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
-  #padding:
-  #  x: 2
-  #  y: 2
+  padding:
+    x: 10
+    y: 10
 
   # Spread additional padding evenly around the terminal content.
   dynamic_padding: false
@@ -63,14 +63,14 @@ scrolling:
   # scrollback is enabled (history > 0).
   multiplier: 3
 
-  # Faux Scrolling
+  # Faux Scrolling (deprecated)
   #
   # The `faux_multiplier` setting controls the number of lines the terminal
   # should scroll when the alternate screen buffer is active. This is used
   # to allow mouse scrolling for applications like `man`.
   #
   # Specifying `0` will disable faux scrolling.
-  faux_multiplier: 3
+  #faux_multiplier: 3
 
   # Scroll to the bottom when new text is written to the terminal.
   auto_scroll: false
@@ -94,7 +94,8 @@ font:
     #   - (macOS) Menlo
     #   - (Linux) monospace
     #   - (Windows) Consolas
-    family: Meslo LG S for Powerline
+    family: Monoid Nerd Font
+    #family: Meslo LG S for Powerline
 
     # The `style` can be specified to pick a specific face.
     #style: Regular
@@ -105,7 +106,8 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Meslo LG S for Powerline
+    family: Monoid Nerd Font
+    #family: Meslo LG S for Powerline
 
     # The `style` can be specified to pick a specific face.
     #style: Bold
@@ -116,7 +118,7 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Meslo LG S for Powerline
+    family: Monoid Nerd Font
 
     # The `style` can be specified to pick a specific face.
     #style: Italic
@@ -137,31 +139,18 @@ font:
     x: 0
     y: 0
 
-  # Thin stroke font rendering (macOS only)
-  #
-  # Thin strokes are suitable for retina displays, but for non-retina screens
-  # it is recommended to set `use_thin_strokes` to `false`
-  #
-  # macOS >= 10.14.x:
-  #
-  # If the font quality on non-retina display looks bad then set
-  # `use_thin_strokes` to `true` and enable font smoothing by running the
-  # following command:
-  #   `defaults write -g CGFontRenderingFontSmoothingDisabled -bool NO`
-  #
-  # This is a global setting and will require a log out or restart to take
-  # effect.
-  use_thin_strokes: true
-
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
+
+debug:
+  persistent_logging: true
 
 # Base16 Material 256 - alacritty color config
 # Nate Peterson
 colors:
   # Default colors
   primary:
-    background: '0x263238'
+    background: '0x181818'
     foreground: '0xeeffff'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
@@ -191,13 +180,15 @@ colors:
     cyan:    '0x89ddff'
     white:   '0xffffff'
 
-  indexed_colors:
-    - { index: 16, color: '0xf78c6c' }
-    - { index: 17, color: '0xff5370' }
-    - { index: 18, color: '0x2e3c43' }
-    - { index: 19, color: '0x314549' }
-    - { index: 20, color: '0xb2ccd6' }
-    - { index: 21, color: '0xeeffff' }
+  indexed_colors: [
+    { index: 16, color: '0xff0000' },
+    { index: 17, color: '0x00ff00' },
+    { index: 18, color: '0x0000ff' },
+    { index: 19, color: '0x314549' },
+    { index: 20, color: '0xb2ccd6' },
+    { index: 21, color: '0xeeffff' },
+    { index: 162, color: '0x000000' },
+  ]
 
 # # Colors (Tomorrow Night Bright)
 # colors:
@@ -305,7 +296,7 @@ visual_bell:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.60
+background_opacity: 0.80
 
 # Mouse bindings
 #
