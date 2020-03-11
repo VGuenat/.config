@@ -1,0 +1,223 @@
+#!/usr/bin/env python3
+
+# Author: Vinent Guenat
+# Date: 2019/10/14
+# Description: a way to display unicode character on the command line for a
+# given font.
+
+
+import argparse
+import sys
+
+version = "0.1"
+
+
+def ucode_range(start, end):
+    """
+    Creates an integer range between the two specified Unicode codepoint.
+    It uses the `range` function internally.
+
+    :param start: a unicode code point (in the form '\\uXXXX').
+    :param end: a unicode code point (in the form '\\uXXXX').
+    :return: a list of integer (as the `range` function would do).
+    """
+    return range(ord(start), ord(end) + 1)
+
+
+def gen_glyphs(cp_list):
+    """
+    Generate a list of utf8-encoded characters from a list of Unicode code
+    points (provided as a list of decimal integers).
+    """
+    for cp in cp_list:
+        yield chr(cp)
+
+
+def print_ucode_range(msg, start, end):
+    """
+    Print the range of unicode symbols between `start` and `end` with the
+    title `msg`. The `start` and `end` unicode parameters must respect
+    Python's format i.e. '\\uXXXX' for 16-bit hex values and '\\UXXXXXXXX' for
+    32-bits hex values (i.e. codes above 0xFFFF like the emoticons code
+    chart).
+
+    :param msg: a string containing the title for this range.
+    :param start: the first unicode code point for this range.
+    :param end: the last unicode code point for this range.
+    """
+    print(msg)
+    urange = ucode_range(start, end)
+    ulist = gen_glyphs(urange)
+    for u in ulist:
+        print(u, " ", end="")
+    print("\n")
+
+
+def dump_glyphs(kwargs):
+    """
+    Dump the main categories of glyphs for latin users.
+
+    :param kwargs: the arguments taken from the argument parser as a dict.
+    """
+
+    types = kwargs["types"]
+    latin = misc = False
+    if types == "latin" or types == "all":
+        latin = True
+    if types == "misc" or types == "all":
+        misc = True
+
+    if latin:
+        print_ucode_range(
+            "Latin script: Basic latin (U+0020 - U+007E)",
+            '\u0020',
+            '\u007E'
+        )
+        print_ucode_range(
+            "Latin script: Latin-1 Supplement (U+00A0 - U+00FF)",
+            '\u00A0',
+            '\u00FF'
+        )
+        print_ucode_range(
+            "Latin script: Latin Extended-A (U+0100 - U+017F)",
+            '\u0100',
+            '\u017F'
+        )
+        print_ucode_range(
+            "Latin script: Latin Extended-B (U+0180 - U+024F)",
+            '\u0180',
+            '\u024F'
+        )
+
+    if misc:
+        print_ucode_range(
+            "Miscellaneous Symbols (U+2600 - U+26FF)",
+            '\u2600',
+            '\u2700'
+        )
+        print_ucode_range(
+            "User interface symbols (U+23E9 - U+23FA)",
+            '\u2359',
+            '\u23FA'
+        )
+        print_ucode_range(
+            "Dingbats (U+2700 - U+27BF)",
+            '\u2700',
+            '\u27BF'
+        )
+        print_ucode_range(
+            "Miscellaneous Symbols and Pictographs (U+1F300 - U+1F5FF)",
+            "\U0001F300",
+            "\U0001F5FF"
+        )
+        print_ucode_range(
+            "Emoticons (U+1F600 - U+1F64F)",
+            '\U0001F600',
+            '\U0001F64F'
+        )
+        print_ucode_range(
+            "Private Use Area part 1 (U+E000 - EFFF)",
+            "\uE000",
+            "\uEFFF"
+        )
+        print_ucode_range(
+            "Private Use Area part 2 (U+F000 - F8FF)",
+            "\uF000",
+            "\uF8FF"
+        )
+    return
+
+
+def get_glyph(cp_list):
+    """
+    Return the character for a given unicode code point `glyph`.
+
+    :param cp_list: the list of glyphs to display (as a list of integers).
+    """
+    glyph_list = gen_glyphs(cp_list)
+    print("Required glyph(s):")
+    cp_it = iter(cp_list)
+    for g in glyph_list:
+        print(hex(cp_it.__next__()).split("x")[-1], g, sep=": ")
+
+
+def get_glyphs(kwargs):
+    cp_list = kwargs["glyphs"]
+    cp_list = [int(cp, 16) if isinstance(cp, str) else cp for cp in cp_list]
+    get_glyph(cp_list)
+
+
+def range_glyphs(kwargs):
+    start = int(kwargs["start"], 16)
+    end = int(kwargs["end"], 16)
+    get_glyph(range(start, end))
+
+
+def cmdline_parse(arguments):
+    """
+    Command-line argument parser using the `argparse` module.
+
+    :param arguments: the list of arguments to parse.
+    :return: a dictionary of parsed arguments.
+    """
+    parser = argparse.ArgumentParser(
+        prog="Showglyphs",
+        description="Script for glyph-related operations"
+    )
+    subparsers = parser.add_subparsers(help="command help")
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="Verbose output",
+        action='store_true'
+    )
+    # Dump command parser
+    parser_dump = subparsers.add_parser(
+        "dump",
+        description="Dump Unicode characters charts"
+    )
+    parser_dump.add_argument(
+        'types',
+        help="The type of glyphs to dump",
+        choices=["all", "latin", "misc"],
+        default="all"
+    )
+    parser_dump.set_defaults(func=dump_glyphs)
+    # Get command parser
+    parser_get = subparsers.add_parser(
+        "get",
+        description="Get the glyph for one or more Unicode code points"
+    )
+    parser_get.add_argument(
+        "glyphs",
+        help="The code point to display (in hexadecimal, with or without \
+                '0x' prefix)",
+        nargs="+"
+    )
+    parser_get.set_defaults(func=get_glyphs)
+    # Range command parser
+    parser_range = subparsers.add_parser(
+        "range",
+        description="Display glyphs for a certain unicode range"
+    )
+    parser_range.add_argument(
+        "start",
+        help="Starting codepoint for the range (in hexadecimal)",
+        type=str
+    )
+    parser_range.add_argument(
+        "end",
+        help="Ending codepoint for the range (in hexadecimal)",
+        type=str
+    )
+    parser_range.set_defaults(func=range_glyphs)
+    return parser.parse_args(arguments)
+
+
+if __name__ == "__main__":
+    print("Font test script v{version}".format(version=version))
+
+    args = cmdline_parse(sys.argv[1:])
+    if args.verbose is True:
+        print(vars(args))
+    args.func(vars(args))
