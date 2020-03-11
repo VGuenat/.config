@@ -1,0 +1,96 @@
+/******************************************************************************
+ * default.rasi
+ * Author: Vincent Guenat
+ * Copyright: Vincent Guenat
+ *****************************************************************************/
+
+/*
+configuration {
+	modi:				"drun,run,window,ssh";
+}
+*/
+
+* {
+	blue:				#1e90ff;
+	black:				#000000;
+	darkgrey:			#222222;
+	dimgrey:			#333333;
+	white:				#ffffff;
+	padding:			0;						/* Padding */
+	margin:				0;						/* Padding */
+	border:				0;						/* Border */
+	border-radius:		0;						/* Padding */
+	background-color:	@black;					/* Color */
+	text-color:			@blue;					/* Color */
+	border-color:		@white;					/* Color */
+	index:				0;						/* Integer */
+}
+
+#window {
+	font:				"Monoid Nerd Font 12";	/* String */
+	transparency:		"real";					/* String */
+	location:			center;					/* Position */
+	anchor:				center;					/* Anchor */
+	fullscreen:			false;					/* Boolean */
+	width:				50%;					/* Distance */
+	x-offset:			0;						/* Distance */
+	y-offset:			0;						/* Distance */
+}
+
+#mainbox {
+	children:			[ bar, listview, mode-switcher ];
+}
+
+#bar {
+	orientation:		horizontal;
+	padding:			10px;
+	children:			[ prompt, entry, overlay ];
+	spacing:			10px;
+	expand:				false;
+}
+
+#listview {
+	padding:			0px 10px;
+}
+
+#mode-switcher {
+	padding:			10px;
+	spacing:			15px;
+}
+
+#button {
+	background-color:	@darkgrey;
+}
+
+#button selected {
+	background-color:	@blue;
+	text-color:			White;
+}
+
+#entry {
+	background-color:	@blue;
+	text-color:			@white;
+	padding:			0px 10px;
+}
+
+#element {
+	background-color:	@dimgrey;
+}
+
+#element alternate {
+	background-color:	@darkgrey;
+}
+
+#element selected {
+	background-color:	@blue;
+	text-color:			@white;
+	padding:			4px;
+}
+
+#element, prompt, entry {
+	padding:			2px;
+}
+
+#prompt {
+	text-color:			@blue;
+}
